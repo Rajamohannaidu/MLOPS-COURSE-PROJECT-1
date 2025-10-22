@@ -8,13 +8,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set the working directory
 WORKDIR /app
 
-# Install system dependencies required by LightGBM
+# Install system dependencies required by LightGBM and other potential dependencies for pyarrow
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    cmake \
     libgomp1 \
+    build-essential \
+    python3-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the application code
+# Copy the application code into the container
 COPY . .
 
 # Install the package in editable mode
